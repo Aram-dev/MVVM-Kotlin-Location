@@ -1,0 +1,10 @@
+<resources>
+    <string name="action_stop">Stop</string>
+    <string name="app_name">Location</string>
+    <string name="action_start">Start</string>
+    <string name="launch_activity">App</string>
+    <string name="latitude">Latitude: %.8f</string>
+    <string name="longitude">Longitude: %.8f</string>
+    <string name="location_updated">Updated: %1$s</string>
+    <string name="current_location">Last location: %.8f / %.8f</string>
+</resources>
