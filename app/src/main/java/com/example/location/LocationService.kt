@@ -50,7 +50,7 @@ class LocationService : Service() {
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        if (!isForeground) {
+        if (isServiceStarted && !isForeground) {
             Timber.tag(LOG_TAG).d("Service unBind")
             startForeground(NOTIFICATION_ID, updateData())
             isForeground = true
@@ -129,6 +129,7 @@ class LocationService : Service() {
         } catch (e: Exception) {
             Timber.tag(LOG_TAG).d("Service stopped without starting: ${e.message}")
         }
+        isForeground = false
         isServiceStarted = false
         setServiceState(this, ServiceState.STOPPED)
     }

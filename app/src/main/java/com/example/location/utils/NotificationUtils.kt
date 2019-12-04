@@ -44,6 +44,7 @@ fun buildNotification(context: Context, model: LocationModel?): Notification {
         .setContentIntent(pendingIntent)
         .setContentTitle(getLocationTitle(context))
         .setSmallIcon(R.drawable.ic_notification)
+        .setDefaults(Notification.DEFAULT_LIGHTS)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         .build()
