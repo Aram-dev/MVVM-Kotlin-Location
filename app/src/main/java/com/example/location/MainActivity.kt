@@ -124,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun provideLocation() {
         when {
             isPermissionsGranted(this) -> {
