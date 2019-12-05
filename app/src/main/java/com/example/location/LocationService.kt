@@ -22,12 +22,12 @@ import timber.log.Timber
 
 class LocationService : Service() {
 
-    private var locationManager: NotificationManager? = null
-    private var currentLocation: LocationModel? = null
-    private var wakeLock: PowerManager.WakeLock? = null
-    private var isServiceStarted = false
     private var isForeground = false
+    private var isServiceStarted = false
     private val localBinder = LocalBinder()
+    private var wakeLock: PowerManager.WakeLock? = null
+    private var currentLocation: LocationModel? = null
+    private var locationManager: NotificationManager? = null
 
     inner class LocalBinder : Binder() {
         fun getService(): LocationService {
@@ -95,7 +95,7 @@ class LocationService : Service() {
 
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::lock").apply {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocationService::lock").apply {
                     acquire(10 * 60 * 1000L /*10 minutes*/)
                 }
             }
@@ -104,17 +104,25 @@ class LocationService : Service() {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
                     Timber.tag(LOG_TAG).d("Start Update")
-                    LocationUtils().updateByFusedLocation(this@LocationService) {
-                        Timber.tag(LOG_TAG).d("New Location: $it")
-                        currentLocation = it
-                        val intent = Intent(ACTION_BROADCAST)
-                        intent.putExtra(EXTRA_LOCATION, it)
-                        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-                    }
+                    startLocationUpdate()
                 }
                 delay( 1000)
             }
         }
+    }
+
+    private fun startLocationUpdate() {
+        LocationUtils().updateByFusedLocation(this@LocationService) {
+            Timber.tag(LOG_TAG).d("New Location: $it")
+            currentLocation = it
+            sendUpdateBroadcast(it)
+        }
+    }
+
+    private fun sendUpdateBroadcast(location: LocationModel) {
+        val intent = Intent(ACTION_BROADCAST)
+        intent.putExtra(EXTRA_LOCATION, location)
+        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
     }
 
     private fun stopService() {

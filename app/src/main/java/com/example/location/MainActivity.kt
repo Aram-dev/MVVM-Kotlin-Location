@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isBound: Boolean = false
     private lateinit var binding: MainActivityBinding
-    private lateinit var receiver: MyReceiver
+    private lateinit var receiver: LocationReceiver
     private lateinit var service: LocationService
 
     private val connection = object : ServiceConnection {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        receiver = MyReceiver {
+        receiver = LocationReceiver {
             mainViewModel.sendLocationData(it)
             updateUI(it)
         }

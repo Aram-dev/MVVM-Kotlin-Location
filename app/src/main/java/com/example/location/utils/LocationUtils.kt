@@ -25,8 +25,8 @@ class LocationUtils {
     init {
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(LocationRequest.create().apply {
-                interval = 2000
-                fastestInterval = 1000
+                interval = 5000
+                fastestInterval = 2000
                 priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             })
         locationSettingsRequest = builder.build()

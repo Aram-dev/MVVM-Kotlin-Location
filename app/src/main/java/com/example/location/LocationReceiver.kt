@@ -6,7 +6,7 @@ import android.content.Intent
 import com.example.location.data.model.LocationModel
 import timber.log.Timber
 
-class MyReceiver(
+class LocationReceiver(
     val function: (LocationModel) -> Unit
 ) : BroadcastReceiver() {
 
