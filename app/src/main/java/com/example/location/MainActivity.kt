@@ -13,11 +13,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.location.data.ServiceState
 import com.example.location.data.enum.Actions
-import com.example.location.data.model.LocationModel
 import com.example.location.databinding.MainActivityBinding
 import com.example.location.ui.MainViewModel
-import com.example.location.utils.*
-import kotlinx.android.synthetic.main.main_activity.*
+import com.example.location.utils.getServiceState
+import com.example.location.utils.isPermissionsGranted
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -47,8 +46,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         receiver = LocationReceiver {
-            mainViewModel.sendLocationData(it)
-            updateUI(it)
+            mainViewModel.sendLocationData(this, it)
+            if (service.isForeground()) {
+                service.updateData()
+            }
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
@@ -71,18 +72,8 @@ class MainActivity : AppCompatActivity() {
         binding.mainViewModel = mainViewModel
     }
 
-    private fun updateUI(location: LocationModel) {
-        if (service.isForeground()) {
-            service.updateData()
-        } else {
-            tv_updated.text = getLocationTitle(this)
-            tv_latitude.text = getString(R.string.latitude, location.latitude)
-            tv_longitude.text = getString(R.string.longitude, location.longitude)
-        }
-    }
-
     private fun observeData() {
-        mainViewModel.isGpsOnBoolean.observe(this, Observer {
+        binding.mainViewModel?.isGpsOnBoolean?.observe(this, Observer {
             Timber.tag(LOG_TAG).i("is GPS ON: $it")
             if (it) {
                 provideLocation()

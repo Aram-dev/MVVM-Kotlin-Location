@@ -106,7 +106,7 @@ class LocationService : Service() {
                     Timber.tag(LOG_TAG).d("Start Update")
                     startLocationUpdate()
                 }
-                delay( 1000)
+                delay( 2000)
             }
         }
     }

@@ -21,7 +21,7 @@ class RemoteModule {
 
     @Provides
     @Reusable
-    fun provideFeedService(retrofit: Retrofit): ApiService =
+    fun provideApiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
     @Provides

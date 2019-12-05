@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.IntentSender
 import android.location.LocationManager
 import android.os.Looper
-import android.widget.Toast
 import com.example.location.GPS_REQUEST
 import com.example.location.GPS_UPDATE_TIME
 import com.example.location.LOG_TAG

@@ -81,6 +81,14 @@ fun getLocationTitle(context: Context): String {
     )
 }
 
+fun getLatitudeText(context: Context, location: LocationModel?): String {
+    return context.getString(R.string.latitude, location?.latitude)
+}
+
+fun getLongitudeText(context: Context, location: LocationModel?): String {
+    return context.getString(R.string.longitude, location?.longitude)
+}
+
 fun getLocationText(context: Context, location: LocationModel?): String {
     return context.getString(R.string.current_location, location?.latitude, location?.longitude)
 }
