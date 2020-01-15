@@ -7,4 +7,7 @@
     <string name="longitude">Longitude: %.8f</string>
     <string name="location_updated">Updated: %1$s</string>
     <string name="current_location">Last location: %.8f / %.8f</string>
+    <string name="hint_latitude">Latitude</string>
+    <string name="hint_longitude">Longitude</string>
+    <string name="hint_updated">Updated</string>
 </resources>
